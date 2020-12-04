@@ -1,3 +1,4 @@
+
 #include "iostream"
 #include "string"
 #include "vector"
@@ -21,13 +22,12 @@
 
 TApplication Runner("gui",0,NULL);
 
-std::vector< const std::string > getListOfFolders(TFile&);
+std::vector< std::string > getListOfFolders(TFile&);
 void plotResolution(const std::string&,TH1D*,TH1D*);
 
 std::string coordinate = "X";
 
 int main( int narg,char* argv[] ) {
-
   if ( narg == 1 ) {
     std::cout<<"No argument provided!"<<std::endl;
     return 0;
@@ -43,7 +43,7 @@ int main( int narg,char* argv[] ) {
   std::string inputFileName = "./data/Outcome_PrimaryVertexResolution.root";
   std::unique_ptr< TFile > inputFile( new TFile(inputFileName.c_str(),"READ") );
 
-  std::vector< const std::string > triggerList = getListOfFolders( *inputFile.get() );
+  std::vector< std::string > triggerList = getListOfFolders( *inputFile.get() );
   std::cout <<"### Available Trigger Chains: " << std::endl;
   for ( const std::string& trigger : triggerList ) {
     if ( trigger.find("HLT") == std::string::npos ) continue;
@@ -72,7 +72,7 @@ int main( int narg,char* argv[] ) {
     plotResolution( iter->first, iter->second, map_PV_RES.find( nonSplitConfiguration.c_str() )->second );
   }
 
-  Runner.Run( true );
+  //  Runner.Run( true );
   inputFile->Close();
 }
 
@@ -98,12 +98,6 @@ void plotResolution( const std::string& trigger, TH1D* HistoSplit, TH1D* HistoNo
   if ( coordinate == "Y" ) lowerCase = "y";
   else if ( coordinate == "Z" ) lowerCase = "z";
 
-  /*
-  std::string xAxisTitle = "";
-  if ( coordinate == "X" ) xAxisTitle = "PV (x_{\\mathrm{online}} - x_{\\mathrm{offline}}) [mm]";
-  else if ( coordinate == "Y" ) xAxisTitle = "PV (y_{\\mathrm{online}} - y_{\\mathrm{offline}}) [mm]";
-  else if ( coordinate == "Z" ) xAxisTitle = "PV (z_{\\mathrm{online}} - z_{\\mathrm{offline}}) \\mathrm{[mm]}";
-  */
   std::string xAxisTitle = Form( "\\mathrm{PV} (\\mathrm{%s}_{online} - \\mathrm{%s}_{offline}) \\ \\mathrm{[mm]}",
 				 lowerCase.c_str(),
   				 lowerCase.c_str() );
@@ -112,14 +106,11 @@ void plotResolution( const std::string& trigger, TH1D* HistoSplit, TH1D* HistoNo
   
   HistoSplit->Scale( 1./HistoSplit->Integral() ); 
   HistoSplit->SetLineColor(2);
-  //  HistoSplit->SetMarkerColor(2);
-  //  HistoSplit->SetMarkerStyle(20);
   HistoSplit->SetMarkerSize(0);
   HistoSplit->SetMaximum(5);
   HistoSplit->SetMinimum(5e-5);
     
   HistoNonSplit->Scale( 1./HistoNonSplit->Integral() );
-  //  HistoNonSplit->SetMarkerStyle(20);
   HistoNonSplit->SetMarkerSize(0);
 
   TLegend *legenda = new TLegend( 0.603152,
@@ -143,19 +134,9 @@ void plotResolution( const std::string& trigger, TH1D* HistoSplit, TH1D* HistoNo
   ATLASLabel(   0.18, 0.85,"Simulation Internal");
   myText(       0.18, 0.79, 1, "#scale[1.]{t#bar{t}, #sqrt{s} = 13 TeV}" );
   myText(       0.18, 0.73, 1, "#scale[1.]{Jet E_{T} > 55 GeV, |#eta| < 2.5}");
-
-   double xPointCoordinate = 0.479943;
-   if ( coordinate != "Z" ) xPointCoordinate = 0.0267106;
-   /*   
-  TLatex *latexText = new TLatex();
-  latexText->DrawLatex( xPointCoordinate,0.3175,"#scale[0.6]{Offline-style}");
-  latexText->DrawLatex( xPointCoordinate,0.181221,Form("    #scale[0.6]{#bf{Mean: %.4f +/- %.4f}}",meanSplit,meanErrorSplit ));
-  latexText->DrawLatex( xPointCoordinate,0.10718743,Form("    #scale[0.6]{#bf{RMS: %.4f +/- %.4f}}",rmsSplit,rmsErrorSplit ));
   
-  latexText->DrawLatex( xPointCoordinate,0.05471914,"#scale[0.6]{Histogram technique}");
-  latexText->DrawLatex( xPointCoordinate,0.03302276,Form("    #scale[0.6]{#bf{Mean: %.4f +/- %.4f}}",meanNonSplit,meanErrorNonSplit ));
-  latexText->DrawLatex( xPointCoordinate,0.01998469,Form("    #scale[0.6]{#bf{RMS: %.4f +/- %.4f}}",rmsNonSplit,rmsErrorNonSplit ));
-   */
+  double xPointCoordinate = 0.479943;
+  if ( coordinate != "Z" ) xPointCoordinate = 0.0267106;
   
   c0->Draw();
   c0->Update();
@@ -163,8 +144,9 @@ void plotResolution( const std::string& trigger, TH1D* HistoSplit, TH1D* HistoNo
   c0->SaveAs( Form("plotPrimaryVertexResolution_%s_%s.png",trigger.c_str(),coordinate.c_str()) );
 }
 
-std::vector< const std::string > getListOfFolders( TFile& file ) {
-  std::vector< const std::string > *vec = new std::vector< const std::string >();
+
+std::vector< std::string > getListOfFolders( TFile& file ) {
+  std::vector< std::string > *vec = new std::vector< std::string >();
 
   file.cd();
   TIter keyList( gDirectory->GetListOfKeys() );
@@ -178,4 +160,7 @@ std::vector< const std::string > getListOfFolders( TFile& file ) {
   }
 
   return *vec;
+
 }
+
+
