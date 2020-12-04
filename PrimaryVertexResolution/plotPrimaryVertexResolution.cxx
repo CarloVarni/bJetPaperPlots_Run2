@@ -72,14 +72,14 @@ int main( int narg,char* argv[] ) {
     plotResolution( iter->first, iter->second, map_PV_RES.find( nonSplitConfiguration.c_str() )->second );
   }
 
-  //  Runner.Run( true );
+  Runner.Run( true );
   inputFile->Close();
 }
 
 void plotResolution( const std::string& trigger, TH1D* HistoSplit, TH1D* HistoNonSplit ) {
 
   if ( coordinate != "Z" ) {
-    HistoSplit->GetXaxis()->SetRangeUser(-0.07,0.05);
+    HistoSplit->GetXaxis()->SetRangeUser(-0.05,0.05);
   }
   
   double meanSplit = HistoSplit->GetMean();
@@ -107,7 +107,7 @@ void plotResolution( const std::string& trigger, TH1D* HistoSplit, TH1D* HistoNo
   HistoSplit->Scale( 1./HistoSplit->Integral() ); 
   HistoSplit->SetLineColor(2);
   HistoSplit->SetMarkerSize(0);
-  HistoSplit->SetMaximum(5);
+  HistoSplit->SetMaximum(15);
   HistoSplit->SetMinimum(5e-5);
     
   HistoNonSplit->Scale( 1./HistoNonSplit->Integral() );
