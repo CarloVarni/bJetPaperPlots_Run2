@@ -58,9 +58,9 @@ int main() {
   // tt-bar
   for ( unsigned int i(0); i<ROCs_online_MV2c10_ttbar.size(); i++ ) {
     ROCs_online_MV2c10_ttbar.at( i )->SetLineColor( 4 );
-    ROCs_online_MV2c10_ttbar.at( i )->SetMinimum( 1e-1 );
-    if ( i == 0 ) ROCs_online_MV2c10_ttbar.at( i )->SetMaximum( 5 * 1e4 );
-    else ROCs_online_MV2c10_ttbar.at( i )->SetMaximum( 8 * 1e2 );
+    ROCs_online_MV2c10_ttbar.at( i )->SetMinimum( 0.6 );
+    if ( i == 0 ) ROCs_online_MV2c10_ttbar.at( i )->SetMaximum( 5 * 1e5 );
+    else ROCs_online_MV2c10_ttbar.at( i )->SetMaximum( 2 * 1e3 );
     ROCs_online_MV2c10_ttbar.at( i )->SetLineWidth( 2 );
     ROCs_online_MV2c10_ttbar.at( i )->SetLineStyle( 2 );
   }
@@ -74,9 +74,9 @@ int main() {
   // Zprime 
   for ( unsigned int i(0); i<ROCs_online_MV2c10_Zprime.size(); i++ ) {
     ROCs_online_MV2c10_Zprime.at( i )->SetLineColor( 4 );
-    ROCs_online_MV2c10_Zprime.at( i )->SetMinimum( 1e-1 );
-    if ( i == 0 ) ROCs_online_MV2c10_Zprime.at( i )->SetMaximum( 5 * 1e4 );
-    else ROCs_online_MV2c10_Zprime.at( i )->SetMaximum( 8 * 1e2 );
+    ROCs_online_MV2c10_Zprime.at( i )->SetMinimum( 0.6 );
+    if ( i == 0 ) ROCs_online_MV2c10_Zprime.at( i )->SetMaximum( 5 * 1e5 );
+    else ROCs_online_MV2c10_Zprime.at( i )->SetMaximum( 2 * 1e3 );
     ROCs_online_MV2c10_Zprime.at( i )->SetLineWidth( 2 );
   }
 
@@ -99,18 +99,15 @@ int main() {
   ROCs_online_MV2c00_Zprime.at( 0 )->Draw( "LSAME" );
 
 
-   ATLASLabel(   0.20, 0.30,"#scale[1.]{Simulation Preliminary}");
-   myText(       0.225, 0.25, 1, "#scale[1.]{t#bar{t}, #sqrt{s} = 13 TeV}" );
-   myText(       0.225, 0.195, 1, "#scale[1.]{Jet E_{T} > 55 GeV, |#eta| < 2.5}");   
-   //   myText(       0.225, 0.23, 1, "#scale[0.7]{#sqrt{s}= 13 TeV}" );
-   //   myText(       0.225, 0.195, 1, "#scale[0.7]{MV2c10, Jet E_{T} > 55 GeV, |#eta_{Jet}| < 2.5}");
-
-    
-  TLegend *legenda_bl = new TLegend( 0.548872,
-  				     0.764384,
-				     0.917293,
-  				     0.90411 );
-
+  ATLASLabel(   0.20, 0.88,"#scale[1.]{Simulation Preliminary}");
+  myText(       0.225, 0.83, 1, "#scale[1.]{t#bar{t}, #sqrt{s} = 13 TeV}" );
+  myText(       0.225, 0.78, 1, "#scale[1.]{Jet E_{T} > 55 GeV, |#eta| < 2.5}");   
+  
+  TLegend *legenda_bl = new TLegend( 0.547619,
+				     0.609032,
+				     0.91604,
+				     0.748387 );
+  
   legenda_bl->SetFillColor(0);
   legenda_bl->SetLineColor(0);
 
@@ -121,10 +118,10 @@ int main() {
 
   legenda_bl->Draw( "SAME" );
 
-  myText(    0.65, 0.875, 1, "#scale[0.7]{t#bar{t}, 2018 tuning}");
-  myText(    0.65, 0.84, 1, "#scale[0.7]{t#bar{t}, Hybrid tuning}");
-  myText(    0.65, 0.805, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, 2018 tuning}");
-  myText(    0.65, 0.77, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, Hybrid tuning}");
+  myText(    0.65, 0.72, 1, "#scale[0.7]{t#bar{t}, 2018 tuning}");
+  myText(    0.65, 0.685, 1, "#scale[0.7]{t#bar{t}, Hybrid tuning}");
+  myText(    0.65, 0.65, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, 2018 tuning}");
+  myText(    0.65, 0.615, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, Hybrid tuning}");
 
   c0->Draw();
   c0->Update();
@@ -143,20 +140,21 @@ int main() {
   ROCs_online_MV2c00_ttbar.at( 1 )->Draw( "LSAME" );
   ROCs_online_MV2c00_Zprime.at( 1 )->Draw( "LSAME" );
 
-  ATLASLabel(   0.20, 0.30,"#scale[1.]{Simulation Preliminary}");
-  myText(       0.225, 0.25, 1, "#scale[1.]{t#bar{t}, #sqrt{s} = 13 TeV}" );
-  myText(       0.225, 0.195, 1, "#scale[1.]{Jet E_{T} > 55 GeV, |#eta| < 2.5}");   
-
-  // ATLASLabel(   0.20, 0.27,"#scale[0.7]{Simulation Preliminary}");
-  // myText(       0.225, 0.23, 1, "#scale[0.7]{#sqrt{s}= 13 TeV}" );
-  // myText(       0.225, 0.195, 1, "#scale[0.7]{MV2c10, Jet E_{T} > 55 GeV, |#eta_{Jet}| < 2.5}");
+  ATLASLabel(   0.20, 0.88,"#scale[1.]{Simulation Preliminary}");
+  myText(       0.225, 0.83, 1, "#scale[1.]{t#bar{t}, #sqrt{s} = 13 TeV}" );
+  myText(       0.225, 0.78, 1, "#scale[1.]{Jet E_{T} > 55 GeV, |#eta| < 2.5}");
 
   legenda_bl->Draw( "SAME" );
 
-  myText(    0.65, 0.875, 1, "#scale[0.7]{t#bar{t}, 2018 tuning}");
-  myText(    0.65, 0.84, 1, "#scale[0.7]{t#bar{t}, Hybrid tuning}");
-  myText(    0.65, 0.805, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, 2018 tuning}");
-  myText(    0.65, 0.77, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, Hybrid tuning}");
+  myText(    0.65, 0.72, 1, "#scale[0.7]{t#bar{t}, 2018 tuning}");
+  myText(    0.65, 0.685, 1, "#scale[0.7]{t#bar{t}, Hybrid tuning}");
+  myText(    0.65, 0.65, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, 2018 tuning}");
+  myText(    0.65, 0.615, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, Hybrid tuning}");
+  
+  // myText(    0.65, 0.875, 1, "#scale[0.7]{t#bar{t}, 2018 tuning}");
+  // myText(    0.65, 0.84, 1, "#scale[0.7]{t#bar{t}, Hybrid tuning}");
+  // myText(    0.65, 0.805, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, 2018 tuning}");
+  // myText(    0.65, 0.77, 1, "#scale[0.7]{Z' #rightarrow t#bar{t}, Hybrid tuning}");
 
   c1->Draw();
   c1->Update();
@@ -164,7 +162,7 @@ int main() {
   c1->SaveAs( "paperPlot_ROC_bc.C" );
   // =======================================================   
 
-  //  Runner.Run( true );
+  Runner.Run( true );
 
   inFile_ttbar->Close();
   inFile_Zprime->Close();
