@@ -13,6 +13,7 @@
 #include "TPad.h"
 #include "TLegend.h"
 #include "TKey.h"
+#include "TMathText.h"
 
 #include "../OfficialMacros/AtlasLabels.C"
 #include "../OfficialMacros/AtlasStyle.C"
@@ -78,7 +79,7 @@ int main( int narg,char* argv[] ) {
 void plotResolution( const std::string& trigger, TH1D* HistoSplit, TH1D* HistoNonSplit ) {
 
   if ( coordinate != "Z" ) {
-    HistoSplit->GetXaxis()->SetRangeUser(-0.1,0.1);
+    HistoSplit->GetXaxis()->SetRangeUser(-0.07,0.05);
   }
   
   double meanSplit = HistoSplit->GetMean();
@@ -91,58 +92,75 @@ void plotResolution( const std::string& trigger, TH1D* HistoSplit, TH1D* HistoNo
   double rmsNonSplit = HistoNonSplit->GetRMS();
   double rmsErrorNonSplit = HistoNonSplit->GetRMSError();
 
-  HistoSplit->GetXaxis()->SetTitle(Form("Primary Vertex Resolution - %s coordinate",coordinate.c_str()));
-  HistoSplit->GetYaxis()->SetTitle("A.U.");
+  double X_width = HistoSplit->GetBinWidth(1);
+
+  std::string lowerCase = "x";
+  if ( coordinate == "Y" ) lowerCase = "y";
+  else if ( coordinate == "Z" ) lowerCase = "z";
+
+  /*
+  std::string xAxisTitle = "";
+  if ( coordinate == "X" ) xAxisTitle = "PV (x_{\\mathrm{online}} - x_{\\mathrm{offline}}) [mm]";
+  else if ( coordinate == "Y" ) xAxisTitle = "PV (y_{\\mathrm{online}} - y_{\\mathrm{offline}}) [mm]";
+  else if ( coordinate == "Z" ) xAxisTitle = "PV (z_{\\mathrm{online}} - z_{\\mathrm{offline}}) \\mathrm{[mm]}";
+  */
+  std::string xAxisTitle = Form( "\\mathrm{PV} (\\mathrm{%s}_{online} - \\mathrm{%s}_{offline}) \\ \\mathrm{[mm]}",
+				 lowerCase.c_str(),
+  				 lowerCase.c_str() );
+  HistoSplit->GetXaxis()->SetTitle( xAxisTitle.c_str() );
+  HistoSplit->GetYaxis()->SetTitle( Form("Fraction of events / %.3f mm",X_width) );
   
   HistoSplit->Scale( 1./HistoSplit->Integral() ); 
   HistoSplit->SetLineColor(2);
-  HistoSplit->SetMarkerColor(2);
-  HistoSplit->SetMarkerStyle(20);
-  HistoSplit->SetMarkerSize(0.7);
+  //  HistoSplit->SetMarkerColor(2);
+  //  HistoSplit->SetMarkerStyle(20);
+  HistoSplit->SetMarkerSize(0);
   HistoSplit->SetMaximum(5);
   HistoSplit->SetMinimum(5e-5);
     
   HistoNonSplit->Scale( 1./HistoNonSplit->Integral() );
-  HistoNonSplit->SetMarkerStyle(20);
-  HistoNonSplit->SetMarkerSize(0.7);
+  //  HistoNonSplit->SetMarkerStyle(20);
+  HistoNonSplit->SetMarkerSize(0);
 
   TLegend *legenda = new TLegend( 0.603152,
-				  0.804211,
-				  0.835244,
-				  0.884211 );
-  legenda->SetFillColorAlpha(0,0);
+				  0.789474,
+				  0.896848,
+				  0.886316 );
+
+ legenda->SetFillColorAlpha(0,0);
   legenda->SetLineColorAlpha(0,0);
 
-  legenda->AddEntry( HistoSplit,"Split","lp");
-  legenda->AddEntry( HistoNonSplit,"Non-Split","lp");
+  legenda->AddEntry( HistoSplit,"Offline Algorithm","l" );
+  legenda->AddEntry( HistoNonSplit,"Histogram technique","l" );
 
   TCanvas *c0 = new TCanvas();
   gPad->SetLogy();
 
-  HistoSplit->Draw("PE");
-  HistoNonSplit->Draw("PESAME");
+  HistoSplit->Draw("HIST");
+  HistoNonSplit->Draw("HISTSAME");
   legenda->Draw("SAME");
 
-  ATLASLabel(   0.18, 0.85,"#scale[0.7]{Simulation Preliminary}");
-  myText(       0.205, 0.81, 1, "#scale[0.7]{t#bar{t}, #sqrt{s} = 13 TeV}"); //#sqrt{s}= 13 TeV}" );
-  myText(       0.205, 0.77, 1, "#scale[0.7]{Jet E_{T} > 55 GeV, |#eta| < 2.5}"); //MV2c10, Jet E_{T} > 55 GeV, | #eta_{Jet}| < 2.5}");
+  ATLASLabel(   0.18, 0.85,"Simulation Internal");
+  myText(       0.18, 0.79, 1, "#scale[1.]{t#bar{t}, #sqrt{s} = 13 TeV}" );
+  myText(       0.18, 0.73, 1, "#scale[1.]{Jet E_{T} > 55 GeV, |#eta| < 2.5}");
 
    double xPointCoordinate = 0.479943;
    if ( coordinate != "Z" ) xPointCoordinate = 0.0267106;
-   
+   /*   
   TLatex *latexText = new TLatex();
-  latexText->DrawLatex( xPointCoordinate,0.3175,"#scale[0.6]{Split}");
+  latexText->DrawLatex( xPointCoordinate,0.3175,"#scale[0.6]{Offline-style}");
   latexText->DrawLatex( xPointCoordinate,0.181221,Form("    #scale[0.6]{#bf{Mean: %.4f +/- %.4f}}",meanSplit,meanErrorSplit ));
   latexText->DrawLatex( xPointCoordinate,0.10718743,Form("    #scale[0.6]{#bf{RMS: %.4f +/- %.4f}}",rmsSplit,rmsErrorSplit ));
   
-  latexText->DrawLatex( xPointCoordinate,0.05471914,"#scale[0.6]{Non-Split}");
+  latexText->DrawLatex( xPointCoordinate,0.05471914,"#scale[0.6]{Histogram technique}");
   latexText->DrawLatex( xPointCoordinate,0.03302276,Form("    #scale[0.6]{#bf{Mean: %.4f +/- %.4f}}",meanNonSplit,meanErrorNonSplit ));
   latexText->DrawLatex( xPointCoordinate,0.01998469,Form("    #scale[0.6]{#bf{RMS: %.4f +/- %.4f}}",rmsNonSplit,rmsErrorNonSplit ));
-  
+   */
   
   c0->Draw();
   c0->Update();
   c0->SaveAs( Form("plotPrimaryVertexResolution_%s_%s.pdf",trigger.c_str(),coordinate.c_str()) );
+  c0->SaveAs( Form("plotPrimaryVertexResolution_%s_%s.png",trigger.c_str(),coordinate.c_str()) );
 }
 
 std::vector< const std::string > getListOfFolders( TFile& file ) {
