@@ -1,4 +1,4 @@
-
+ 
 #include "iostream"
 #include "memory"
 
@@ -58,7 +58,7 @@ int main() {
   // tt-bar
   for ( unsigned int i(0); i<ROCs_online_MV2c10_ttbar.size(); i++ ) {
     ROCs_online_MV2c10_ttbar.at( i )->SetLineColor( 4 );
-    ROCs_online_MV2c10_ttbar.at( i )->SetMinimum( 0.6 );
+    ROCs_online_MV2c10_ttbar.at( i )->SetMinimum( 1e-1 );
     if ( i == 0 ) ROCs_online_MV2c10_ttbar.at( i )->SetMaximum( 5 * 1e4 );
     else ROCs_online_MV2c10_ttbar.at( i )->SetMaximum( 8 * 1e2 );
     ROCs_online_MV2c10_ttbar.at( i )->SetLineWidth( 2 );
@@ -74,7 +74,7 @@ int main() {
   // Zprime 
   for ( unsigned int i(0); i<ROCs_online_MV2c10_Zprime.size(); i++ ) {
     ROCs_online_MV2c10_Zprime.at( i )->SetLineColor( 4 );
-    ROCs_online_MV2c10_Zprime.at( i )->SetMinimum( 0.6 );
+    ROCs_online_MV2c10_Zprime.at( i )->SetMinimum( 1e-1 );
     if ( i == 0 ) ROCs_online_MV2c10_Zprime.at( i )->SetMaximum( 5 * 1e4 );
     else ROCs_online_MV2c10_Zprime.at( i )->SetMaximum( 8 * 1e2 );
     ROCs_online_MV2c10_Zprime.at( i )->SetLineWidth( 2 );
@@ -99,9 +99,11 @@ int main() {
   ROCs_online_MV2c00_Zprime.at( 0 )->Draw( "LSAME" );
 
 
-   ATLASLabel(   0.20, 0.27,"#scale[0.7]{Simulation Preliminary}");
-   myText(       0.225, 0.23, 1, "#scale[0.7]{#sqrt{s}= 13 TeV}" );
-   myText(       0.225, 0.195, 1, "#scale[0.7]{MV2c10, Jet E_{T} > 55 GeV, |#eta_{Jet}| < 2.5}");
+   ATLASLabel(   0.20, 0.30,"#scale[1.]{Simulation Preliminary}");
+   myText(       0.225, 0.25, 1, "#scale[1.]{t#bar{t}, #sqrt{s} = 13 TeV}" );
+   myText(       0.225, 0.195, 1, "#scale[1.]{Jet E_{T} > 55 GeV, |#eta| < 2.5}");   
+   //   myText(       0.225, 0.23, 1, "#scale[0.7]{#sqrt{s}= 13 TeV}" );
+   //   myText(       0.225, 0.195, 1, "#scale[0.7]{MV2c10, Jet E_{T} > 55 GeV, |#eta_{Jet}| < 2.5}");
 
     
   TLegend *legenda_bl = new TLegend( 0.548872,
@@ -141,9 +143,13 @@ int main() {
   ROCs_online_MV2c00_ttbar.at( 1 )->Draw( "LSAME" );
   ROCs_online_MV2c00_Zprime.at( 1 )->Draw( "LSAME" );
 
-  ATLASLabel(   0.20, 0.27,"#scale[0.7]{Simulation Preliminary}");
-  myText(       0.225, 0.23, 1, "#scale[0.7]{#sqrt{s}= 13 TeV}" );
-  myText(       0.225, 0.195, 1, "#scale[0.7]{MV2c10, Jet E_{T} > 55 GeV, |#eta_{Jet}| < 2.5}");
+  ATLASLabel(   0.20, 0.30,"#scale[1.]{Simulation Preliminary}");
+  myText(       0.225, 0.25, 1, "#scale[1.]{t#bar{t}, #sqrt{s} = 13 TeV}" );
+  myText(       0.225, 0.195, 1, "#scale[1.]{Jet E_{T} > 55 GeV, |#eta| < 2.5}");   
+
+  // ATLASLabel(   0.20, 0.27,"#scale[0.7]{Simulation Preliminary}");
+  // myText(       0.225, 0.23, 1, "#scale[0.7]{#sqrt{s}= 13 TeV}" );
+  // myText(       0.225, 0.195, 1, "#scale[0.7]{MV2c10, Jet E_{T} > 55 GeV, |#eta_{Jet}| < 2.5}");
 
   legenda_bl->Draw( "SAME" );
 

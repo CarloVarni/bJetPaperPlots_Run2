@@ -3,6 +3,7 @@
 *.save
 *.pdf
 *.png
+*.C
 
 # OS generated files #
 ######################
